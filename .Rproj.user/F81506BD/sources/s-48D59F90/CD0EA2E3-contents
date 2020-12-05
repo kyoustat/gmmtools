@@ -1,0 +1,68 @@
+#include <RcppArmadillo.h>
+#include <RcppArmadilloExtensions/sample.h>
+#include "utilities.h"
+#include <cassert>
+#include <algorithm>
+
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
+using namespace Rcpp;
+using namespace arma;
+using namespace std;
+
+
+// TOOLS : GAUSSIAN DISTRIBUTION ===============================================
+// https://juanitorduz.github.io/multivariate_normal/ convention with lower chol
+// [[Rcpp::export]]
+arma::mat  gauss_rmvnorm(int N, arma::vec mu, arma::mat var){
+  int d = mu.n_elem;
+  arma::mat L = arma::chol(var, "lower");
+  arma::rowvec murow = arma::trans(mu);
+  
+  arma::mat tmat = L*(arma::randn<arma::mat>(d,N));
+  arma::mat output(N,d,fill::zeros);
+  for (int n=0; n<N; n++){
+    output.row(n) = murow + arma::trans(tmat.col(n));
+  }
+  return(output);
+}
+arma::vec eval_gaussian_multiple(arma::mat X, arma::rowvec mu, arma::mat Sig, bool logreturn){
+  // parameters
+  int n = X.n_rows; double nn = static_cast<double>(n);
+  int d = X.n_cols; double dd = static_cast<double>(d);
+  
+  // preparation
+  double add1 = -(dd/2.0)*std::log(2.0*arma::datum::pi);
+  double add2 = std::log(arma::det(Sig))*(-0.5);
+  arma::vec outvec(n,fill::zeros);
+  arma::rowvec xdiff(d,fill::zeros);
+  arma::mat Sinv = arma::inv_sympd(Sig);
+  for (int i=0;i<n;i++){
+    xdiff = X.row(i) - mu;
+    outvec(i) = -(arma::accu(xdiff*Sinv*xdiff.t())/2.0) + add1 + add2;
+  }
+  if (logreturn==true){
+    return(outvec);
+  } else {
+    return(arma::exp(outvec));
+  }
+}
+// [[Rcpp::export]]
+arma::uvec eval_label(arma::mat& X, arma::mat parMU, arma::cube parSIG, arma::vec parPI){
+  // parameters
+  int N = X.n_rows;
+  int K = parSIG.n_slices;
+  // compute gamma
+  arma::mat parGAMMA(N,K,fill::zeros);
+  for (int k=0; k<K; k++){
+    parGAMMA.col(k) = parPI(k)*eval_gaussian_multiple(X, parMU.row(k), parSIG.slice(k), false);
+  }
+  // for each component, find the maximal
+  arma::uvec output(N,fill::zeros);
+  for (int n=0; n<N; n++){
+    output(n) = arma::index_max(parGAMMA.row(n));
+  }
+  return(output);
+}

@@ -1,0 +1,14 @@
+#' Learning with GMMs
+#'
+#' @docType package
+#' @name gmmtools
+#' @aliases package-gmmtools
+#' @noRd
+#' @importFrom Rdimtools do.pca
+#' @import Rdpack
+#' @import ggplot2
+#' @importFrom T4cluster gensmiley
+#' @importFrom utils packageVersion getFromNamespace 
+#' @importFrom Rcpp evalCpp
+#' @useDynLib gmmtools
+NULL

@@ -1,0 +1,53 @@
+#include "RcppArmadillo.h"
+#include "utilities.h"
+
+// [[Rcpp::depends(RcppArmadillo)]]
+
+using namespace Rcpp;
+using namespace arma;
+
+/* FITTING GMM MODELS
+ * (01) gmm_armadillo : use Armadillo's native routine for Gaussian Mixture
+ */
+
+
+
+// (01) gmm_armadillo ==========================================================
+// [[Rcpp::export]]
+Rcpp::List gmm_armadillo(arma::mat& X, int k, int maxiter, bool usediag){
+  if (usediag==true){ // use diagonal
+    arma::gmm_diag model;
+    bool status = model.learn(arma::trans(X), k, maha_dist, random_subset, 10, maxiter, 1e-11, false);
+    if (status==false){
+      Rcpp::stop("* gmm : Fitting GMM with diagonal covariance failed.");
+    } else {
+      // successful, let's take out the elements and return
+      
+      arma::mat diagcovs = model.dcovs;
+      int p = diagcovs.n_rows;
+      int k = diagcovs.n_cols;
+      arma::cube myfcovs(p,p,k,fill::zeros);
+      for (int i=0; i<k; i++){
+        myfcovs.slice(i) = arma::diagmat(diagcovs.col(i));
+      }
+      return Rcpp::List::create(Rcpp::Named("means")=arma::trans(model.means),
+                                Rcpp::Named("covs")=myfcovs,
+                                Rcpp::Named("weight")=model.hefts,
+                                Rcpp::Named("loglkd")=model.sum_log_p(arma::trans(X)),
+                                Rcpp::Named("cluster")=arma::trans(model.assign(arma::trans(X), prob_dist)));
+    }
+  } else {
+    arma::gmm_full model;
+    bool status = model.learn(arma::trans(X), k, maha_dist, random_subset, 10, maxiter, 1e-11, false);
+    if (status==false){
+      Rcpp::stop("* gmm : Fitting GMM with full covariance failed.");
+    } else {
+      // successful, let's take out the elements and return
+      return Rcpp::List::create(Rcpp::Named("means")=arma::trans(model.means),
+                                Rcpp::Named("covs")=model.fcovs,
+                                Rcpp::Named("weight")=model.hefts,
+                                Rcpp::Named("loglkd")=model.sum_log_p(arma::trans(X)),
+                                Rcpp::Named("cluster")=arma::trans(model.assign(arma::trans(X), prob_dist)));
+    }
+  }
+}

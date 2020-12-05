@@ -1,0 +1,18 @@
+#ifndef GMMTOOLS_UTILITIES_H
+#define GMMTOOLS_UTILITIES_H
+
+#define ARMA_NO_DEBUG
+#include <RcppArmadillo.h>
+
+using namespace Rcpp;
+using namespace arma;
+using namespace std;
+
+
+arma::vec eval_gaussian_multiple(arma::mat X, arma::rowvec mu, arma::mat Sig, bool logreturn=false);
+arma::uvec eval_label(arma::mat& X, arma::mat parMU, arma::cube parSIG, arma::vec parPI);
+
+arma::mat gauss_rmvnorm(int N, arma::vec mu, arma::mat var); 
+
+
+#endif

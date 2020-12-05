@@ -1,0 +1,51 @@
+## AUXILIARY FUNCTIONS
+#  prec_input_matrix : return output as row-stacked matrix
+#  check_alldiag     : whether all covariances are diagonal or not
+#  check_gmmobj      : whether input is a valid GMMOBJ
+
+
+
+# prec_input_matrix -------------------------------------------------------
+#' @keywords internal
+#' @noRd
+prec_input_matrix <- function(x){
+  if (is.vector(x)){
+    output = matrix(x, ncol=1)
+    return(output)
+  } else {
+    if (is.matrix(x)){
+      return(x)
+    } else {
+      stop("* input should be either a vector or a matrix.")  
+    }
+  }
+}
+
+# check_alldiag -----------------------------------------------------------
+#' @keywords internal
+#' @noRd
+check_alldiag <- function(covariance){
+  k = dim(covariance)[3]
+  for (i in 1:k){
+    tgt = covariance[,,i]
+    if (any(as.vector(tgt[upper.tri(tgt)])!=0)){
+      return(FALSE)
+    }
+  }
+  return(TRUE)
+}
+# check_gmmobj ------------------------------------------------------------
+#' @keywords internal
+#' @noRd
+check_gmmobj <- function(gmmobj, fname){
+  if (!inherits(gmmobj,"gmmtools")){
+    stop(paste0("* ",fname," : input 'gmmobj' should be an object from any gmm functions in our package."))
+  }
+  objnames = names(gmmobj)
+  cond1 = ("mean"%in%objnames)
+  cond2 = ("variance"%in%objnames)
+  cond3 = ("weight"%in%objnames)
+  if (!(cond1&&cond2&&cond3)){
+    stop(paste0("* ",fname," : input 'gmmobj' is not a valid object with mean, variance, and weight parameters."))
+  }
+}

@@ -1,0 +1,79 @@
+[
+    {
+        "file": "/home/kisung/Desktop/gmmtools/src/gmm_fit.cpp",
+        "file_last_write": 1606454893.0,
+        "definitions": [
+            {
+                "usr": "c:@F@gmm_armadillo#&$@N@arma@S@Mat>#d#I#I#b#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "gmm_armadillo(arma::mat &, int, int, bool)",
+                "file": "/home/kisung/Desktop/gmmtools/src/gmm_fit.cpp",
+                "line": 17,
+                "column": 12
+            }
+        ]
+    },
+    {
+        "file": "/home/kisung/Desktop/gmmtools/src/gmm_util.cpp",
+        "file_last_write": 1606538038.0,
+        "definitions": [
+            {
+                "usr": "c:@F@gmm_density#&$@N@arma@S@Mat>#d#&$@N@arma@S@Col>#d#S0_#&$@N@arma@S@Cube>#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "gmm_density(arma::mat &, arma::vec &, arma::mat &, arma::cube &)",
+                "file": "/home/kisung/Desktop/gmmtools/src/gmm_util.cpp",
+                "line": 16,
+                "column": 11
+            },
+            {
+                "usr": "c:@F@gmm_sample#I#$@N@arma@S@Col>#d#$@N@arma@S@Mat>#d#$@N@arma@S@Cube>#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "gmm_sample(int, arma::colvec, arma::mat, arma::cube)",
+                "file": "/home/kisung/Desktop/gmmtools/src/gmm_util.cpp",
+                "line": 37,
+                "column": 11
+            }
+        ]
+    },
+    {
+        "file": "/home/kisung/Desktop/gmmtools/src/utilities.cpp",
+        "file_last_write": 1606538969.0,
+        "definitions": [
+            {
+                "usr": "c:@F@gauss_rmvnorm#I#$@N@arma@S@Col>#d#$@N@arma@S@Mat>#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "gauss_rmvnorm(int, arma::vec, arma::mat)",
+                "file": "/home/kisung/Desktop/gmmtools/src/utilities.cpp",
+                "line": 19,
+                "column": 12
+            },
+            {
+                "usr": "c:@F@eval_gaussian_multiple#$@N@arma@S@Mat>#d#$@N@arma@S@Row>#d#S0_#b#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "eval_gaussian_multiple(arma::mat, arma::rowvec, arma::mat, bool)",
+                "file": "/home/kisung/Desktop/gmmtools/src/utilities.cpp",
+                "line": 31,
+                "column": 11
+            },
+            {
+                "usr": "c:@F@eval_label#&$@N@arma@S@Mat>#d#S1_#$@N@arma@S@Cube>#d#$@N@arma@S@Col>#d#",
+                "kind": 6,
+                "parent_name": "",
+                "name": "eval_label(arma::mat &, arma::mat, arma::cube, arma::vec)",
+                "file": "/home/kisung/Desktop/gmmtools/src/utilities.cpp",
+                "line": 53,
+                "column": 12
+            }
+        ]
+    },
+    {
+        "file": "/home/kisung/Desktop/gmmtools/src/utilities.h",
+        "file_last_write": 1606538639.0,
+        "definitions": []
+    }
+]

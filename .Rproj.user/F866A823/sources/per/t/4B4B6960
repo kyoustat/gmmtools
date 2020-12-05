@@ -1,0 +1,24 @@
+{
+    "id": "4B4B6960",
+    "path": "~/Desktop/gmmtools/src/gmm_fit.cpp",
+    "project_path": "src/gmm_fit.cpp",
+    "type": "cpp",
+    "hash": "3729847417",
+    "contents": "",
+    "dirty": false,
+    "created": 1607142636115.0,
+    "source_on_save": false,
+    "relative_order": 3,
+    "properties": {
+        "cursorPosition": "355,9",
+        "scrollLine": "341"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1607143620,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1607143620641,
+    "read_only": false,
+    "read_only_alternatives": []
+}
